@@ -17,9 +17,7 @@ namespace FinalWork_Serv.Models
 
         public SQLCommand()
         {
-            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;
-                          Initial Catalog=Lesson7;
-                          Integrated Security=True;";
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
             connection = new SqlConnection(connectionString);
             connection.Open();
