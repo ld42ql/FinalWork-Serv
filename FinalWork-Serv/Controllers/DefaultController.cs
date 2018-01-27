@@ -13,16 +13,33 @@ namespace FinalWork_Serv.Controllers
     {
         SQLCommand command = new SQLCommand();
 
+        /// <summary>
+        /// Показать всех
+        /// </summary>
         [Route("getlist")]
         public List<Employee> Get()
         {
             return command.ViewList();
         }
 
+        /// <summary>
+        /// Показать одного работника
+        /// </summary>
         [Route("getlist/{id}")]
         public Employee Get(int id)
         {
             return command.ViewEmployee(id);
+        }
+
+        /// <summary>
+        /// Добавить работника
+        /// </summary>
+        [Route("add")]
+        public HttpResponseMessage Post([FromBody]Employee value)
+        {
+            command.InsertEmployee(value);
+
+            return Request.CreateResponse(HttpStatusCode.Created);
         }
     }
 }

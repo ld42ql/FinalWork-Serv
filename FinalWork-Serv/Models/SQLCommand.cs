@@ -81,5 +81,21 @@ namespace FinalWork_Serv.Models
             
             return employee;
         }
+
+        /// <summary>
+        /// Добавить работника
+        /// </summary>
+        /// <param name="employee">Работник</param>
+        public void InsertEmployee(Employee employee)
+        {
+            string sql = $@"
+            INSERT INTO Employee (FIO, Salary, Department)
+            VALUES (N'{employee.FIO}','{employee.Salary}',N'{employee.NameDepartmet}')";
+
+            using (var com = new SqlCommand(sql, connection))
+            {
+                com.ExecuteNonQuery();
+            }
+        }
     }
 }
