@@ -10,16 +10,14 @@ using System.Windows;
 
 namespace FinalWork_Serv.Models
 {
-    
- public   class SQLCommand
+
+    public class SQLCommand
     {
         SqlConnection connection;
 
         public SQLCommand()
         {
-            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;
-                          Initial Catalog=Lesson7;
-                          Integrated Security=True;";
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
             connection = new SqlConnection(connectionString);
             connection.Open();
@@ -47,7 +45,6 @@ namespace FinalWork_Serv.Models
                             Salary = sdr[2].ToString(),
                             NameDepartmet = sdr[3].ToString()
                         });
-
                     }
                 }
                 com.ExecuteNonQuery();
@@ -62,7 +59,27 @@ namespace FinalWork_Serv.Models
         /// <returns></returns>
         public Employee ViewEmployee(int Id)
         {
-            return ViewList()[Id];
+            Employee employee = new Employee();
+
+            using (var com = new SqlCommand($@"SELECT * FROM Employee WHERE Id = {Id}", connection))
+            {
+                using (SqlDataReader sdr = com.ExecuteReader())
+                {
+                    if (sdr.Read())
+                    {
+                        employee = new Employee
+                        {
+                            ID = Convert.ToInt32(sdr[0]),
+                            FIO = sdr[1].ToString(),
+                            Salary = sdr[2].ToString(),
+                            NameDepartmet = sdr[3].ToString()
+                        };
+                    }
+                }
+                com.ExecuteNonQuery();
+            }
+            
+            return employee;
         }
     }
 }
