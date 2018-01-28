@@ -35,9 +35,31 @@ namespace FinalWork_Serv.Controllers
         /// Добавить работника
         /// </summary>
         [Route("add")]
-        public HttpResponseMessage Post([FromBody]Employee value)
+        public HttpResponseMessage PostAdd([FromBody]Employee value)
         {
             command.InsertEmployee(value);
+
+            return Request.CreateResponse(HttpStatusCode.Created);
+        }
+
+        /// <summary>
+        /// Удалить работника
+        /// </summary>
+        [Route("getdelete/{id}")]
+        public List<Employee> GetDelete(int Id)
+        {
+            command.DeleteEmployee(Id);
+
+            return command.ViewList();
+        }
+
+        /// <summary>
+        /// Отредактировать работника
+        /// </summary>
+        [Route("edit")]
+        public HttpResponseMessage PostEdit([FromBody]Employee value)
+        {
+            command.UpdateEmployee(value);
 
             return Request.CreateResponse(HttpStatusCode.Created);
         }
