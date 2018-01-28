@@ -97,5 +97,32 @@ namespace FinalWork_Serv.Models
                 com.ExecuteNonQuery();
             }
         }
+
+        /// <summary>
+        /// Удалить работника
+        /// </summary>
+        /// <param name="Id">Номер работника</param>
+        public void DeleteEmployee(int Id)
+        {
+            var sql = $@"DELETE FROM Employee WHERE Id='{Id}'";
+            using (var com = new SqlCommand(sql, connection))
+            {
+                com.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Отредактировать работника
+        /// </summary>
+        public void UpdateEmployee(Employee employee)
+        {
+            var sql = $@"UPDATE Employee 
+                            SET FIO = N'{employee.FIO}', Salary = '{employee.Salary}', Department = N'{employee.NameDepartmet}'
+                            WHERE Id = '{employee.ID}' ";
+            using (var com = new SqlCommand(sql, connection))
+            {
+                com.ExecuteNonQuery();
+            }
+        }
     }
 }
